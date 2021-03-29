@@ -47,15 +47,6 @@ namespace API_.NET_CORE_Notes.Controllers
 
         }
 
-        //// GET: SongsController
-        //[HttpPost]
-        //public async Task<IActionResult> Post([FromBody] Song songObj)
-        //{
-        //    await _dBcontext.Songs.AddAsync(songObj);
-        //    await _dBcontext.SaveChangesAsync();
-        //    return StatusCode(StatusCodes.Status201Created);
-        //}
-
         // GET: SongsController
         [HttpPost]
         public async Task<IActionResult> Post([FromForm] Song songObj)
@@ -77,7 +68,7 @@ namespace API_.NET_CORE_Notes.Controllers
             var song = await _dBcontext.Songs.FindAsync(id);
 
             song.Title = songObj.Title;
-            song.Language = songObj.Language;
+              
 
             await _dBcontext.SaveChangesAsync();
 
@@ -100,5 +91,17 @@ namespace API_.NET_CORE_Notes.Controllers
             return StatusCode(StatusCodes.Status200OK);
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> SearchSongs(string query)
+        {
+            var songs = await (from song in _dBcontext.Songs
+                where song.Title.Contains(query)
+                select new
+                {
+                    Id = song.Id,
+                    Title = song.Title,
+                }).Take(15).ToListAsync();
+            return Ok(songs);
+        }
     }
 }

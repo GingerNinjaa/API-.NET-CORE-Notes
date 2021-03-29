@@ -11,5 +11,7 @@ namespace API_.NET_CORE_Notes.data
         }
 
         public DbSet<Song> Songs { get; set; }
+        public DbSet<Album> Albums { get; set; }
+        public DbSet<Artist> Artists { get; set; }
     }
 }

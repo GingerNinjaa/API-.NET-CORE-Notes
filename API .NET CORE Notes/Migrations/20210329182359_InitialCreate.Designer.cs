@@ -4,14 +4,16 @@ using API_.NET_CORE_Notes.data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API_.NET_CORE_Notes.Migrations
 {
     [DbContext(typeof(ApiDBcontext))]
-    partial class ApiDBcontextModelSnapshot : ModelSnapshot
+    [Migration("20210329182359_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
