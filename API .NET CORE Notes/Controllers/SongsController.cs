@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using API_.NET_CORE_Notes.data;
+using API_.NET_CORE_Notes.Helpers;
 using API_.NET_CORE_Notes.Models;
+using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
@@ -44,14 +47,28 @@ namespace API_.NET_CORE_Notes.Controllers
 
         }
 
+        //// GET: SongsController
+        //[HttpPost]
+        //public async Task<IActionResult> Post([FromBody] Song songObj)
+        //{
+        //    await _dBcontext.Songs.AddAsync(songObj);
+        //    await _dBcontext.SaveChangesAsync();
+        //    return StatusCode(StatusCodes.Status201Created);
+        //}
+
         // GET: SongsController
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Song songObj)
+        public async Task<IActionResult> Post([FromForm] Song songObj)
         {
+            //Store in blob storage.
+           var imageUrl= await FileHelper.UploadImage(songObj.Image);
+           songObj.ImageUrl = imageUrl;
             await _dBcontext.Songs.AddAsync(songObj);
             await _dBcontext.SaveChangesAsync();
             return StatusCode(StatusCodes.Status201Created);
         }
+
+
 
         // GET: SongsController
         [HttpPut("{id}")]
