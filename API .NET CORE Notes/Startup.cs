@@ -29,6 +29,9 @@ namespace API_.NET_CORE_Notes
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            
+            //Zwracanie api w XML
+            services.AddMvc().AddXmlSerializerFormatters();
 
             services.AddDbContext<ApiDBcontext>(option => option.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog = SongsDB;"));
 
